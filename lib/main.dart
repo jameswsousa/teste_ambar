@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teste_ambar/api.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+Api api = Api();
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -59,6 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _incrementCounter();
+          print(api.getMap().toString());
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
