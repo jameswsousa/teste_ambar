@@ -41,11 +41,13 @@ class _MyHomePageState extends State<MyHomePage> {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.waiting:
-              return Container(
-                width: 200,
-                height: 200,
-                alignment: Alignment.center,
-                child: CircularProgressIndicator(),
+              return Center(
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  alignment: Alignment.center,
+                  child: CircularProgressIndicator(),
+                ),
               );
             default:
               if (snapshot.hasError)
