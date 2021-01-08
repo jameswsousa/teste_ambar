@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:teste_ambar/api.dart';
+import 'package:teste_ambar/git_repository.dart';
+import 'package:teste_ambar/repocard.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,63 +11,57 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 Api api = Api();
+List<GitRepository> reps = [];
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage();
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfffffffc),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Teste Ambar'),
+        centerTitle: true,
+        backgroundColor: Color(0xff0d1821),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _incrementCounter();
-          print(api.getMap().toString());
+      body: FutureBuilder(
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return Container(
+                width: 200,
+                height: 200,
+                alignment: Alignment.center,
+                child: CircularProgressIndicator(),
+              );
+            default:
+              if (snapshot.hasError)
+                return Container();
+              else
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) => RepoCard(
+                    avatar: snapshot.data[index].avatar,
+                    name: snapshot.data[index].name,
+                    owner: snapshot.data[index].owner,
+                  ),
+                );
+          }
         },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+        future: api.getList(),
       ),
     );
   }
