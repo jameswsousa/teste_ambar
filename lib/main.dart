@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teste_ambar/api.dart';
+import 'package:teste_ambar/custom_loading_widget.dart';
 import 'package:teste_ambar/git_repository.dart';
 import 'package:teste_ambar/repocard.dart';
 
@@ -46,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   width: 200,
                   height: 200,
                   alignment: Alignment.center,
-                  child: CircularProgressIndicator(),
+                  child: CustomLoadingWidget(),
                 ),
               );
             default:
