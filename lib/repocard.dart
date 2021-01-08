@@ -15,21 +15,27 @@ class RepoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Color(0xff4bdbbd),
-          borderRadius: BorderRadius.circular(10),
+    return Container(
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Color(0xff88e7d4),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        onTap: () {},
+        title: Text(
+          name,
         ),
-        child: ListTile(
-          title: Text(
-            name,
-          ),
-          subtitle: Text(owner),
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(avatar),
+        subtitle: Text(owner),
+        leading: Container(
+          decoration: BoxDecoration(
+              border: Border.all(color: Color(0xff187764), width: 2),
+              borderRadius: BorderRadius.circular(40)),
+          child: CircleAvatar(
+            radius: 25,
+            backgroundImage: NetworkImage(
+              avatar,
+            ),
           ),
         ),
       ),
