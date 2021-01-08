@@ -52,7 +52,30 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             default:
               if (snapshot.hasError)
-                return Container();
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Houve um erro na comunicação.',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      RaisedButton(
+                        elevation: 10,
+                        color: Color(0xff9bf6ff),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        onPressed: () {
+                          setState(() {});
+                        },
+                        child: Text(
+                          'Tentar novamente',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      )
+                    ],
+                  ),
+                );
               else
                 return ListView.builder(
                   itemCount: snapshot.data.length,
