@@ -2,13 +2,13 @@ class GitRepository {
   String name;
   String owner;
   String avatar;
-  String url;
+  String repUrl;
 
   GitRepository({
     this.avatar,
     this.name,
     this.owner,
-    this.url,
+    this.repUrl,
   });
 
   factory GitRepository.fromJson(Map<dynamic, dynamic> json) {
@@ -18,7 +18,7 @@ class GitRepository {
       name: json['name'],
       owner: json['owner']['login'],
       avatar: json['owner']['avatar_url'],
-      url: json['html_url'],
+      repUrl: json['html_url'],
     );
   }
 }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RepoCard extends StatelessWidget {
   final String name;
   final String owner;
-  final String url;
+  final String repUrl;
   final String avatar;
 
   const RepoCard(
       {@required this.name,
       @required this.owner,
-      // @required
-      this.url,
+      @required this.repUrl,
       @required this.avatar});
 
   @override
@@ -22,7 +22,15 @@ class RepoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
-        onTap: () {},
+        onTap: () async {
+          final url = repUrl;
+
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            throw 'Could not launch';
+          }
+        },
         title: Text(
           name,
         ),

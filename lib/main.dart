@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     avatar: snapshot.data[index].avatar,
                     name: snapshot.data[index].name,
                     owner: snapshot.data[index].owner,
+                    repUrl: snapshot.data[index].repUrl,
                   ),
                 );
           }
