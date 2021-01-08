@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:teste_ambar/custom_loading_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RepoCard extends StatelessWidget {
@@ -19,32 +20,68 @@ class RepoCard extends StatelessWidget {
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Color(0xff88e7d4),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(40),
       ),
-      child: ListTile(
+      child: InkWell(
         onTap: () async {
-          final url = repUrl;
+          {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    content: Container(
+                      height: 300,
+                      width: 300,
+                      child: CustomLoadingWidget(),
+                    ),
+                  );
+                });
+            final url = repUrl;
 
-          if (await canLaunch(url)) {
-            await launch(url);
-          } else {
-            throw 'Could not launch';
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              throw 'Could not launch';
+            }
+            Navigator.pop(context);
           }
         },
-        title: Text(
-          name,
-        ),
-        subtitle: Text(owner),
-        leading: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Color(0xff187764), width: 2),
-              borderRadius: BorderRadius.circular(40)),
-          child: CircleAvatar(
-            radius: 25,
-            backgroundImage: NetworkImage(
-              avatar,
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Color(0xff187764), width: 2),
+                  borderRadius: BorderRadius.circular(40)),
+              child: CircleAvatar(
+                radius: 25,
+                backgroundImage: NetworkImage(
+                  avatar,
+                ),
+              ),
             ),
-          ),
+            SizedBox(
+              width: 15,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  name,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                  ),
+                ),
+                Text('Autor: $owner')
+              ],
+            ),
+            Expanded(
+                child: Container(
+              padding: EdgeInsets.only(right: 5),
+              alignment: Alignment.centerRight,
+              child: Icon(Icons.arrow_forward_ios),
+            ))
+          ],
         ),
       ),
     );
