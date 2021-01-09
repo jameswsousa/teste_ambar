@@ -77,18 +77,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 );
               else
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) => RepoCard(
-                    avatar: snapshot.data[index].avatar,
-                    name: snapshot.data[index].name,
-                    owner: snapshot.data[index].owner,
-                    repUrl: snapshot.data[index].repUrl,
-                  ),
-                );
+                return buildList(snapshot.data);
           }
         },
         future: api.getList(),
+      ),
+    );
+  }
+
+  Widget buildList(List<GitRepository> reps) {
+    return ListView.builder(
+      itemCount: reps.length,
+      itemBuilder: (context, index) => RepoCard(
+        avatar: reps[index].avatar,
+        name: reps[index].name,
+        owner: reps[index].owner,
+        repUrl: reps[index].repUrl,
       ),
     );
   }
