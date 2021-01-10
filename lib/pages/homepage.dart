@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:teste_ambar/repocard.dart';
-
-import 'api.dart';
-import 'custom_loading_widget.dart';
-import 'exceptions.dart';
-import 'git_repository.dart';
-
-Api api = Api();
-List<GitRepository> reps = [];
+import 'package:teste_ambar/data/api.dart' as api;
+import 'package:teste_ambar/data/model/git_repository.dart';
+import 'package:teste_ambar/errors/exceptions.dart';
+import 'package:teste_ambar/widgets/custom_loading_widget.dart';
+import 'package:teste_ambar/widgets/repocard.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage();
@@ -15,6 +11,12 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
+api.Api gitApi = Api();
+
+Api() {}
+
+List<GitRepository> reps = [];
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
@@ -81,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getListFromApi() async {
     try {
-      return await api.getList();
+      return await gitApi.getList();
     } on NoInternetException {
       return Future.error('Verifique sua conexão com a internet');
     } on DataException {

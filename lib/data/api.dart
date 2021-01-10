@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:teste_ambar/git_repository.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:teste_ambar/errors/exceptions.dart';
 
-import 'exceptions.dart';
+import 'model/git_repository.dart';
 
 class Api {
+  Api();
   Future<List<GitRepository>> getList() async {
     if (await DataConnectionChecker().hasConnection) {
       http.Response response;

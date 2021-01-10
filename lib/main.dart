@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'homepage.dart';
+import 'package:teste_ambar/pages/homepage.dart';
 
 void main() {
   runApp(MyApp());
