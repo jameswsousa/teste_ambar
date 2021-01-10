@@ -12,7 +12,9 @@ enum StoreState { initial, loading, loaded }
 abstract class _GitRepositoryStore with Store {
   final Api _api;
 
-  _GitRepositoryStore(this._api);
+  _GitRepositoryStore(this._api) {
+    getList();
+  }
 
   @observable
   ObservableFuture<List<GitRepository>> _repsFuture;
