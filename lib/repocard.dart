@@ -26,16 +26,7 @@ class RepoCard extends StatelessWidget {
         onTap: () async {
           {
             showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    content: Container(
-                      height: 300,
-                      width: 300,
-                      child: CustomLoadingWidget(),
-                    ),
-                  );
-                });
+                context: context, builder: (context) => buildLoadingDialog());
             final url = repUrl;
 
             if (await canLaunch(url)) {
@@ -53,7 +44,7 @@ class RepoCard extends StatelessWidget {
                   border: Border.all(color: Color(0xff187764), width: 2),
                   borderRadius: BorderRadius.circular(40)),
               child: CircleAvatar(
-                radius: 25,
+                radius: 30,
                 backgroundImage: NetworkImage(
                   avatar,
                 ),
@@ -83,6 +74,16 @@ class RepoCard extends StatelessWidget {
             ))
           ],
         ),
+      ),
+    );
+  }
+
+  AlertDialog buildLoadingDialog() {
+    return AlertDialog(
+      content: Container(
+        height: 300,
+        width: 300,
+        child: CustomLoadingWidget(),
       ),
     );
   }
