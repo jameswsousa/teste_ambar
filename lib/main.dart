@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:teste_ambar/api.dart';
 import 'package:teste_ambar/custom_loading_widget.dart';
+import 'package:teste_ambar/exceptions.dart';
 import 'package:teste_ambar/git_repository.dart';
 import 'package:teste_ambar/repocard.dart';
 
@@ -57,10 +58,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Houve um erro na comunicação.',
+                        snapshot.error,
                         style: TextStyle(fontSize: 20),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       RaisedButton(
+                        padding: EdgeInsets.all(15),
                         elevation: 10,
                         color: Color(0xff9bf6ff),
                         shape: RoundedRectangleBorder(
@@ -76,13 +81,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 );
-              else
+              else {
                 return buildList(snapshot.data);
+              }
           }
         },
-        future: api.getList(),
+        future: getListFromApi(),
       ),
     );
+  }
+
+  Future getListFromApi() async {
+    try {
+      return await api.getList();
+    } on NoInternetException {
+      return Future.error('Verifique sua conexão com a internet');
+    } on DataException {
+      return Future.error('Erro ao obter dados');
+    } catch (e) {
+      return Future.error('Houve um erro de comunicação');
+    }
   }
 
   Widget buildList(List<GitRepository> reps) {
