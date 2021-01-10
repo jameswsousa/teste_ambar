@@ -7,7 +7,6 @@ import 'package:teste_ambar/errors/exceptions.dart';
 import 'model/git_repository.dart';
 
 class Api {
-  Api();
   Future<List<GitRepository>> getList() async {
     if (await DataConnectionChecker().hasConnection) {
       http.Response response;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:teste_ambar/data/api.dart' as api;
+import 'package:teste_ambar/data/api.dart';
 import 'package:teste_ambar/data/model/git_repository.dart';
 import 'package:teste_ambar/errors/exceptions.dart';
 import 'package:teste_ambar/widgets/custom_loading_widget.dart';
@@ -12,9 +12,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-api.Api gitApi = Api();
-
-Api() {}
+Api api = Api();
 
 List<GitRepository> reps = [];
 
@@ -83,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getListFromApi() async {
     try {
-      return await gitApi.getList();
+      return await api.getList();
     } on NoInternetException {
       return Future.error('Verifique sua conexão com a internet');
     } on DataException {
