@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:teste_ambar/data/api.dart';
 import 'package:teste_ambar/data/model/git_repository.dart';
 import 'package:teste_ambar/errors/exceptions.dart';
+import 'package:teste_ambar/state/git_repository_store.dart';
 import 'package:teste_ambar/widgets/custom_loading_widget.dart';
 import 'package:teste_ambar/widgets/repocard.dart';
 
@@ -17,6 +19,14 @@ Api api = Api();
 List<GitRepository> reps = [];
 
 class _MyHomePageState extends State<MyHomePage> {
+  GitRepositoryStore _gitRepoStore;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _gitRepoStore ??= Provider.of<GitRepositoryStore>(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
